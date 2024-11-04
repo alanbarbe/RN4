@@ -2,6 +2,7 @@
   "compilerOptions": {
     "strict": true,
     "allowJs": true,
+    "types": ["react-native", "@react-navigation/native"],
     "esModuleInterop": true,
     "jsx": "react-native",
     "lib": [

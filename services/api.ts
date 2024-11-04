@@ -12,7 +12,7 @@ const api = axios.create({
 });
 
 // Equipos
-export const obtenerEquipos = async (): Promise<Equipo[]> => {
+export const obtenerEquipos = async (id: string): Promise<Equipo[]> => {
   try {
     const response = await api.get('/equipos');
     return response.data;

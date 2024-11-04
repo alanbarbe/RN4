@@ -1,37 +1,47 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Text } from 'react-native';
-import { useAuth } from '../context/AuthContext';
-import  App  from '../components/CamaraComponent';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import type { NavigationScreenProps } from '../types';
 
-export default function PerfilScreen() {
-  const { usuario, cerrarSesion } = useAuth();
-  const [mostrarCamara, setMostrarCamara] = useState(false);
-  const [fotoPerfil, setFotoPerfil] = useState(null);
+export default function PerfilScreen({ navigation }: NavigationScreenProps<'Perfil'>) {
+  const [photoUri, setPhotoUri] = useState<string | null>(null);
 
-  const handleFotoTomada = (uri: React.SetStateAction<null>) => {
-    setFotoPerfil(uri);
-    setMostrarCamara(false);
-    // Aquí podrías implementar la lógica para subir la foto al servidor
+  const handleTakePhoto = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    
+    if (status !== 'granted') {
+      alert('Se necesita permiso para acceder a la cámara');
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setPhotoUri(result.assets[0].uri);
+    }
   };
-
-  if (mostrarCamara) {
-    return <App onPhotoTaken={handleFotoTomada} />;
-  }
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setMostrarCamara(true)}>
-        <Image
-          source={fotoPerfil ? { uri: fotoPerfil } : require('../../assets/default-profile.png')}
-          style={styles.profileImage}
-        />
-      </TouchableOpacity>
-      <Text style={styles.name}>{usuario?.nombre}</Text>
-      <Text style={styles.email}>{usuario?.email}</Text>
-      <Text style={styles.role}>{usuario?.rol}</Text>
-      <TouchableOpacity style={styles.logoutButton} onPress={cerrarSesion}>
-        <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
+      <View style={styles.photoContainer}>
+        {photoUri ? (
+          <Image source={{ uri: photoUri }} style={styles.photo} />
+        ) : (
+          <View style={styles.photoPlaceholder}>
+            <Text>Sin foto</Text>
+          </View>
+        )}
+      </View>
+      
+      <TouchableOpacity 
+        style={styles.button}
+        onPress={handleTakePhoto}
+      >
+        <Text style={styles.buttonText}>Tomar Foto</Text>
       </TouchableOpacity>
     </View>
   );
@@ -40,41 +50,40 @@ export default function PerfilScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
     alignItems: 'center',
+  },
+  photoContainer: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+  },
+  photo: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 100,
+  },
+  photoPlaceholder: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 100,
+    backgroundColor: '#f0f0f0',
     justifyContent: 'center',
-    backgroundColor: '#f5f6fa',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 20,
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 8,
+    width: '80%',
   },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#2c3e50',
-  },
-  email: {
-    fontSize: 18,
-    marginBottom: 10,
-    color: '#34495e',
-  },
-  role: {
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
     fontSize: 16,
-    marginBottom: 20,
-    color: '#7f8c8d',
-  },
-  logoutButton: {
-    backgroundColor: '#e74c3c',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-  },
-  logoutButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
 });

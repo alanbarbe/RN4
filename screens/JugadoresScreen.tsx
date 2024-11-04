@@ -32,15 +32,6 @@ const JugadoresScreen: React.FC = () => {
   });
 
   
-  const actualizarJugador = (jugador: Jugador) => {
-    setJugadorSeleccionado({
-      id: jugador.id,
-      nombre: jugador.nombre,
-      escudo: '', 
-      posicion: jugador.posicion,
-      estadisticas: jugador.estadisticas
-    });
-  };
 
   return (
     <View>

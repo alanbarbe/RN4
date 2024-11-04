@@ -1,92 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { obtenerPartidos } from '../services/api';
+import React, { useState, useCallback } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import type { NavigationScreenProps, Partido } from '../types';
 
-export default function PartidosScreen() {
-  const [partidos, setPartidos] = useState([]);
-  const navigation = useNavigation();
+export default function PartidosScreen({ navigation }: NavigationScreenProps<'Partidos'>) {
+  const [partidos, setPartidos] = useState<Partido[]>([]);
 
-  useEffect(() => {
-    cargarPartidos();
-  }, []);
-
-  const cargarPartidos = async () => {
-    try {
-      const datosPartidos = await obtenerPartidos();
-      setPartidos(datosPartidos);
-    } catch (error) {
-      console.error('Error al cargar partidos:', error);
-    }
-  };
-
-  const renderPartido = ({ item }) => (
-    <TouchableOpacity 
-      style={styles.tarjetaPartido}
+  const renderPartido = useCallback(({ item }: { item: Partido }) => (
+    <TouchableOpacity
+      style={styles.partidoCard}
       onPress={() => navigation.navigate('DetallePartido', { id: item.id })}
     >
-      <Text style={styles.fechaPartido}>{item.fecha}</Text>
-      <View style={styles.equiposContainer}>
-        <Text style={styles.equipoNombre}>{item.equipoLocal}</Text>
-        <Text style={styles.vs}>VS</Text>
-        <Text style={styles.equipoNombre}>{item.equipoVisitante}</Text>
+      <Text style={styles.fecha}>
+        {new Date(item.fecha).toLocaleDateString()}
+      </Text>
+      <View style={styles.equipos}>
+        <Text style={styles.equipo}>{item.equipoLocal}</Text>
+        <Text style={styles.vs}>vs</Text>
+        <Text style={styles.equipo}>{item.equipoVisitante}</Text>
       </View>
-      <Text style={styles.estadioPartido}>{item.estadio}</Text>
+      <Text style={styles.lugar}>{item.lugar}</Text>
     </TouchableOpacity>
-  );
+  ), [navigation]);
 
   return (
-    <View style={styles.contenedor}>
+    <View style={styles.container}>
       <FlatList
         data={partidos}
         renderItem={renderPartido}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>No hay partidos programados</Text>
+        }
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  contenedor: {
+  container: {
     flex: 1,
-    backgroundColor: '#f5f6fa',
-    padding: 15,
-  },
-  tarjetaPartido: {
+    padding: 16,
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 15,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
   },
-  fechaPartido: {
+  partidoCard: {
+    backgroundColor: '#f5f5f5',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 12,
+  },
+  fecha: {
     fontSize: 14,
-    color: '#7f8c8d',
-    marginBottom: 5,
+    color: '#666',
+    marginBottom: 8,
   },
-  equiposContainer: {
+  equipos: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: 8,
   },
-  equipoNombre: {
+  equipo: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2c3e50',
+    fontWeight: '500',
+    flex: 1,
   },
   vs: {
     fontSize: 14,
-    color: '#3498db',
+    color: '#666',
+    marginHorizontal: 8,
   },
-  estadioPartido: {
+  lugar: {
     fontSize: 14,
-    color: '#7f8c8d',
-    marginTop: 5,
+    color: '#666',
+  },
+  emptyText: {
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#666',
   },
 });

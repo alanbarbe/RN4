@@ -1,5 +1,29 @@
 import { LocationObject } from "expo-location";
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ReactNode } from "react";
 
+
+export type RootStackParamList = {
+  Inicio: undefined;
+  DetalleEquipo: { id: string };
+  DetalleJugador: { id: string };
+  DetallePartido: { id: string };
+  Equipos: undefined;
+  Jugadores: undefined;
+  Partidos: undefined;
+  Perfil: undefined;
+  Estadisticas: undefined;
+};
+
+export type NavigationScreenProps<T extends keyof RootStackParamList> = 
+  NativeStackScreenProps<RootStackParamList, T>;
+
+export type RootStackScreenProps<T extends keyof RootStackParamList> = 
+  NativeStackScreenProps<RootStackParamList, T>;
+
+  export interface PhotoTakenEvent {
+    uri: string;
+  }
 export interface Equipo {
   id: string;
   nombre: string;
@@ -32,6 +56,7 @@ export interface Jugador {
 }
 
 export interface Partido {
+  lugar: ReactNode;
   id: string;
   equipoLocal: string;
   equipoVisitante: string;
@@ -82,3 +107,14 @@ export interface LocationHookResult {
 export { LocationObject };export interface Usuario {
     }
 
+export interface DetalleEquipoScreenProps {
+  route: RootStackScreenProps<'DetalleEquipo'>['route'];
+}
+
+export interface DetalleJugadorScreenProps {
+  route: RootStackScreenProps<'DetalleJugador'>['route'];
+}
+
+export interface DetallePartidoScreenProps {
+  route: RootStackScreenProps<'DetallePartido'>['route'];
+}
