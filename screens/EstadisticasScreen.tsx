@@ -19,7 +19,7 @@ export default function EstadisticasScreen() {
       equipoLider: 'Equipo A',
       goleador: 'Juan Pérez (Equipo A)',
       asistidor: 'María González (Equipo B)',
-      equipoMasGoles: 'Equipo C',
+      equipoMasGoles: 'Equipo A',
       equipoMenosGoles: 'Equipo D',
     });
   }, []);
