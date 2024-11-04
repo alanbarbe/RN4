@@ -24,7 +24,6 @@ export default function InicioScreen() {
         obtenerEstadisticasTorneo()
       ]);
       setProximosPartidos(partidos);
-      setEquiposDestacados(equipos);
       setEstadisticas(stats);
     } catch (error) {
       console.error('Error al cargar datos de inicio:', error);
@@ -38,8 +37,8 @@ export default function InicioScreen() {
       <View style={styles.seccion}>
         <Text style={styles.subtitulo}>Próximos Partidos</Text>
         {proximosPartidos.map((partido) => (
-          <TouchableOpacity 
-            key={partido.id} 
+          <TouchableOpacity
+            key={partido.id}
             style={styles.tarjetaPartido}
             onPress={() => navigation.navigate('DetallePartido', { id: partido.id })}
           >
@@ -52,8 +51,8 @@ export default function InicioScreen() {
       <View style={styles.seccion}>
         <Text style={styles.subtitulo}>Equipos Destacados</Text>
         {equiposDestacados.map((equipo) => (
-          <TouchableOpacity 
-            key={equipo.id} 
+          <TouchableOpacity
+            key={equipo.id}
             style={styles.tarjetaEquipo}
             onPress={() => navigation.navigate('DetalleEquipo', { id: equipo.id })}
           >
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
   },
   nombreEquipo: {
     fontSize: 16,
-    
+
     fontWeight: '600',
     color: '#2c3e50',
   },
