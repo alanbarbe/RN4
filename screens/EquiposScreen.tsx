@@ -1,47 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import TarjetaEquipo from '../components/TarjetaEquipo';
-import { obtenerEquipos } from '../services/api';
-import type { Equipo } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Equipos'>;
+
+interface Equipo {
+  id: string;
+  nombre: string;
+  escudo: string;
+}
 
 export default function EquiposScreen() {
-  const [equipos, setEquipos] = useState([]);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
+  const [equipos, setEquipos] = useState<Equipo[]>([]);
 
   useEffect(() => {
-    cargarEquipos();
+    // Aquí deberías cargar los equipos desde tu API o base de datos
+    // Por ahora, usaremos datos de ejemplo
+    setEquipos([
+      { id: '1', nombre: 'Equipo A', escudo: 'https://example.com/escudoA.png' },
+      { id: '2', nombre: 'Equipo B', escudo: 'https://example.com/escudoB.png' },
+      { id: '3', nombre: 'Equipo C', escudo: 'https://example.com/escudoC.png' },
+    ]);
   }, []);
 
-  const cargarEquipos = async () => {
-    try {
-      const datosEquipos = await obtenerEquipos();
-      setEquipos(datosEquipos);
-    } catch (error) {
-      console.error('Error al cargar equipos:', error);
-    }
-  };
+  const renderEquipo = ({ item }: { item: Equipo }) => (
+    <TouchableOpacity
+      style={styles.equipoItem}
+      onPress={() => navigation.navigate('DetalleEquipo', { id: item.id })}
+    >
+      <Text style={styles.equipoNombre}>{item.nombre}</Text>
+    </TouchableOpacity>
+  );
 
   return (
-    <View style={styles.contenedor}>
+    <View style={styles.container}>
       <FlatList
         data={equipos}
-        renderItem={({ item }) => (
-          <TarjetaEquipo
-            equipo={item}
-            onPress={() => navigation.navigate('DetalleEquipo', { id: item.id })}
-          />
-        )}
+        renderItem={renderEquipo}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={<Text>No hay equipos disponibles</Text>}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  contenedor: {
+  container: {
     flex: 1,
-    backgroundColor: '#f5f6fa',
-    padding: 15,
+    padding: 10,
+  },
+  equipoItem: {
+    backgroundColor: '#f9f9f9',
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 5,
+  },
+  equipoNombre: {
+    fontSize: 18,
   },
 });

@@ -1,143 +1,117 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import { Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-import { obtenerDetallePartido } from '../services/api';
-import MapaPartido from '../components/MapaPartido';
-import { Partido } from '../types';
-
-type RootStackParamList = {
-  DetallePartido: { id: string };
-};
+import { RootStackParamList } from '../types';
 
 type DetallePartidoScreenRouteProp = RouteProp<RootStackParamList, 'DetallePartido'>;
 
-type Props = {
+interface DetallePartidoScreenProps {
   route: DetallePartidoScreenRouteProp;
-};
+}
 
-export default function DetallePartidoScreen({ route }: Props) {
-  const [partido, setPartido] = useState<Partido | null>(null);
+interface Partido {
+  id: string;
+  equipoLocal: string;
+  equipoVisitante: string;
+  fecha: string;
+  hora: string;
+  lugar: string;
+  resultado?: {
+    golesLocal: number;
+    golesVisitante: number;
+  };
+  eventos: Array<{
+    minuto: number;
+    descripcion: string;
+  }>;
+}
+
+export default function DetallePartidoScreen({ route }: DetallePartidoScreenProps) {
   const { id } = route.params;
+  const [partido, setPartido] = useState<Partido | null>(null);
 
   useEffect(() => {
-    cargarDetallePartido();
-  }, []);
-
-  const cargarDetallePartido = async () => {
-    try {
-      const datos = await obtenerDetallePartido(id);
-      setPartido(datos);
-    } catch (error) {
-      console.error('Error al cargar detalle del partido:', error);
-    }
-  };
+    // Aquí deberías cargar los detalles del partido desde tu API o base de datos
+    // Por ahora, usaremos datos de ejemplo
+    setPartido({
+      id,
+      equipoLocal: 'Equipo A',
+      equipoVisitante: 'Equipo B',
+      fecha: '2023-12-01',
+      hora: '20:00',
+      lugar: 'Estadio Principal',
+      resultado: {
+        golesLocal: 2,
+        golesVisitante: 1,
+      },
+      eventos: [
+        { minuto: 15, descripcion: 'Gol de Equipo A' },
+        { minuto: 35, descripcion: 'Tarjeta amarilla para jugador de Equipo B' },
+        { minuto: 60, descripcion: 'Gol de Equipo B' },
+        { minuto: 85, descripcion: 'Gol de Equipo A' },
+      ],
+    });
+  }, [id]);
 
   if (!partido) {
-    return (
-      <View style={styles.contenedor}>
-        <Text>Cargando...</Text>
-      </View>
-    );
+    return <View style={styles.container}><Text>Cargando detalles del partido...</Text></View>;
   }
 
   return (
-    <ScrollView style={styles.contenedor}>
-      <View style={styles.equiposContainer}>
-        <Text style={styles.equipoNombre}>{partido.equipoLocal}</Text>
-        <Text style={styles.vs}>VS</Text>
-        <Text style={styles.equipoNombre}>{partido.equipoVisitante}</Text>
-      </View>
-      <Text style={styles.fecha}>{partido.fecha}</Text>
-      <Text style={styles.estadio}>{partido.estadio}</Text>
+    <View style={styles.container}>
+      <Text style={styles.titulo}>{`${partido.equipoLocal} vs ${partido.equipoVisitante}`}</Text>
+      <Text style={styles.info}>{`Fecha: ${partido.fecha}`}</Text>
+      <Text style={styles.info}>{`Hora: ${partido.hora}`}</Text>
+      <Text style={styles.info}>{`Lugar: ${partido.lugar}`}</Text>
       {partido.resultado && (
-        <View style={styles.resultadoContainer}>
-          <Text style={styles.resultado}>{partido.resultado.golesLocal}</Text>
-          <Text style={styles.resultado}>-</Text>
-          <Text style={styles.resultado}>{partido.resultado.golesVisitante}</Text>
+        <View style={styles.resultado}>
+          <Text style={styles.subtitulo}>Resultado:</Text>
+          <Text style={styles.resultadoTexto}>
+            {`${partido.equipoLocal} ${partido.resultado.golesLocal} - ${partido.resultado.golesVisitante} ${partido.equipoVisitante}`}
+          </Text>
         </View>
       )}
-      <Text style={styles.subtitulo}>Eventos del Partido</Text>
+      <Text style={styles.subtitulo}>Eventos del Partido:</Text>
       {partido.eventos.map((evento, index) => (
-        <View key={index} style={styles.eventoContainer}>
-          <Text style={styles.eventoMinuto}>{evento.minuto}'</Text>
-          <Text style={styles.eventoDescripcion}>{evento.descripcion}</Text>
-        </View>
+        <Text key={index} style={styles.evento}>
+          {`${evento.minuto}' - ${evento.descripcion}`}
+        </Text>
       ))}
-      <Text style={styles.subtitulo}>Ubicación del Estadio</Text>
-      <MapaPartido 
-        latitud={partido.ubicacion.latitud} 
-        longitud={partido.ubicacion.longitud} 
-        titulo={partido.estadio} 
-      />
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  contenedor: {
+  container: {
     flex: 1,
-    backgroundColor: '#f5f6fa',
-    padding: 15,
+    padding: 10,
   },
-  equiposContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  equipoNombre: {
-    fontSize: 20,
+  titulo: {
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#2c3e50',
-  },
-  vs: {
-    fontSize: 16,
-    color: '#7f8c8d',
-  },
-  fecha: {
-    fontSize: 18,
-    color: '#34495e',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  estadio: {
-    fontSize: 16,
-    color: '#7f8c8d',
     textAlign: 'center',
     marginBottom: 20,
   },
-  resultadoContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
+  info: {
+    fontSize: 16,
+    marginBottom: 5,
   },
   resultado: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#2c3e50',
-    marginHorizontal: 10,
+    marginTop: 20,
+    marginBottom: 20,
   },
   subtitulo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  resultadoTexto: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 20,
-    marginBottom: 10,
-    color: '#2c3e50',
+    textAlign: 'center',
+    color: '#007AFF',
   },
-  eventoContainer: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  eventoMinuto: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#3498db',
-    marginRight: 10,
-  },
-  eventoDescripcion: {
-    fontSize: 16,
-    color: '#34495e',
+  evento: {
+    fontSize: 14,
+    marginBottom: 5,
   },
 });

@@ -1,26 +1,43 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import type { NavigationScreenProps, Partido } from '../types';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
 
-export default function PartidosScreen({ navigation }: NavigationScreenProps<'Partidos'>) {
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Partidos'>;
+
+interface Partido {
+  id: string;
+  equipoLocal: string;
+  equipoVisitante: string;
+  fecha: string;
+  resultado?: string;
+}
+
+export default function PartidosScreen() {
+  const navigation = useNavigation<NavigationProp>();
   const [partidos, setPartidos] = useState<Partido[]>([]);
 
-  const renderPartido = useCallback(({ item }: { item: Partido }) => (
+  useEffect(() => {
+    // Aquí deberías cargar los partidos desde tu API o base de datos
+    // Por ahora, usaremos datos de ejemplo
+    setPartidos([
+      { id: '1', equipoLocal: 'Equipo A', equipoVisitante: 'Equipo B', fecha: '2023-12-01', resultado: '2-1' },
+      { id: '2', equipoLocal: 'Equipo C', equipoVisitante: 'Equipo D', fecha: '2023-12-05' },
+      { id: '3', equipoLocal: 'Equipo B', equipoVisitante: 'Equipo C', fecha: '2023-12-10' },
+    ]);
+  }, []);
+
+  const renderPartido = ({ item }: { item: Partido }) => (
     <TouchableOpacity
-      style={styles.partidoCard}
+      style={styles.partidoItem}
       onPress={() => navigation.navigate('DetallePartido', { id: item.id })}
     >
-      <Text style={styles.fecha}>
-        {new Date(item.fecha).toLocaleDateString()}
-      </Text>
-      <View style={styles.equipos}>
-        <Text style={styles.equipo}>{item.equipoLocal}</Text>
-        <Text style={styles.vs}>vs</Text>
-        <Text style={styles.equipo}>{item.equipoVisitante}</Text>
-      </View>
-      <Text style={styles.lugar}>{item.lugar}</Text>
+      <Text style={styles.partidoEquipos}>{`${item.equipoLocal} vs ${item.equipoVisitante}`}</Text>
+      <Text style={styles.partidoFecha}>{item.fecha}</Text>
+      {item.resultado && <Text style={styles.partidoResultado}>Resultado: {item.resultado}</Text>}
     </TouchableOpacity>
-  ), [navigation]);
+  );
 
   return (
     <View style={styles.container}>
@@ -28,9 +45,7 @@ export default function PartidosScreen({ navigation }: NavigationScreenProps<'Pa
         data={partidos}
         renderItem={renderPartido}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>No hay partidos programados</Text>
-        }
+        ListEmptyComponent={<Text>No hay partidos programados</Text>}
       />
     </View>
   );
@@ -39,43 +54,25 @@ export default function PartidosScreen({ navigation }: NavigationScreenProps<'Pa
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
+    padding: 10,
   },
-  partidoCard: {
-    backgroundColor: '#f5f5f5',
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 12,
+  partidoItem: {
+    backgroundColor: '#f9f9f9',
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 5,
   },
-  fecha: {
+  partidoEquipos: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  partidoFecha: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 8,
   },
-  equipos: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  equipo: {
+  partidoResultado: {
     fontSize: 16,
-    fontWeight: '500',
-    flex: 1,
-  },
-  vs: {
-    fontSize: 14,
-    color: '#666',
-    marginHorizontal: 8,
-  },
-  lugar: {
-    fontSize: 14,
-    color: '#666',
-  },
-  emptyText: {
-    textAlign: 'center',
-    marginTop: 20,
-    color: '#666',
+    color: '#007AFF',
+    marginTop: 5,
   },
 });

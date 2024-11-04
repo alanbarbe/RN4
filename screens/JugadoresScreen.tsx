@@ -1,51 +1,71 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import type { Jugador } from '../types';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
 
-interface JugadorState {
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Jugadores'>;
+
+interface Jugador {
   id: string;
   nombre: string;
-  escudo: string;
-  posicion: string;
-  estadisticas: {
-    goles: number;
-    tarjetasAmarillas: number;
-    tarjetasRojas: number;
-    partidosJugados: number;
-  };
+  apellido: string;
+  equipo: string;
 }
 
-const JugadoresScreen: React.FC = () => {
-  
+export default function JugadoresScreen() {
+  const navigation = useNavigation<NavigationProp>();
   const [jugadores, setJugadores] = useState<Jugador[]>([]);
-  const [jugadorSeleccionado, setJugadorSeleccionado] = useState<JugadorState>({
-    id: '',
-    nombre: '',
-    escudo: '',
-    posicion: '',
-    estadisticas: {
-      goles: 0,
-      tarjetasAmarillas: 0,
-      tarjetasRojas: 0,
-      partidosJugados: 0
-    }
-  });
 
-  
+  useEffect(() => {
+    // Aquí deberías cargar los jugadores desde tu API o base de datos
+    // Por ahora, usaremos datos de ejemplo
+    setJugadores([
+      { id: '1', nombre: 'Juan', apellido: 'Pérez', equipo: 'Equipo A' },
+      { id: '2', nombre: 'María', apellido: 'González', equipo: 'Equipo B' },
+      { id: '3', nombre: 'Carlos', apellido: 'Rodríguez', equipo: 'Equipo C' },
+    ]);
+  }, []);
+
+  const renderJugador = ({ item }: { item: Jugador }) => (
+    <TouchableOpacity
+      style={styles.jugadorItem}
+      onPress={() => navigation.navigate('DetalleJugador', { id: item.id })}
+    >
+      <Text style={styles.jugadorNombre}>{`${item.nombre} ${item.apellido}`}</Text>
+      <Text style={styles.jugadorEquipo}>{item.equipo}</Text>
+    </TouchableOpacity>
+  );
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={jugadores}
+        renderItem={renderJugador}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View>
-            <Text>{item.nombre}</Text>
-          </View>
-        )}
+        ListEmptyComponent={<Text>No hay jugadores disponibles</Text>}
       />
     </View>
   );
-};
+}
 
-export default JugadoresScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  jugadorItem: {
+    backgroundColor: '#f9f9f9',
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 5,
+  },
+  jugadorNombre: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  jugadorEquipo: {
+    fontSize: 14,
+    color: '#666',
+  },
+});

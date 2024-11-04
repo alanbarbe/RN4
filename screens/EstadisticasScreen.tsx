@@ -1,93 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import { Text } from 'react-native';
-import { obtenerEstadisticasTorneo } from '../services/api';
-import { EstadisticasTorneo } from '../types';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
+
+interface Estadisticas {
+  equipoLider: string;
+  goleador: string;
+  asistidor: string;
+  equipoMasGoles: string;
+  equipoMenosGoles: string;
+}
 
 export default function EstadisticasScreen() {
-  const [estadisticas, setEstadisticas] = useState<EstadisticasTorneo | null>(null);
+  const [estadisticas, setEstadisticas] = useState<Estadisticas | null>(null);
 
   useEffect(() => {
-    cargarEstadisticas();
+    // Aquí deberías cargar las estadísticas desde tu API o base de datos
+    // Por ahora, usaremos datos de ejemplo
+    setEstadisticas({
+      equipoLider: 'Equipo A',
+      goleador: 'Juan Pérez (Equipo A)',
+      asistidor: 'María González (Equipo B)',
+      equipoMasGoles: 'Equipo C',
+      equipoMenosGoles: 'Equipo D',
+    });
   }, []);
 
-  const cargarEstadisticas = async () => {
-    try {
-      const datosEstadisticas = await obtenerEstadisticasTorneo();
-      setEstadisticas(datosEstadisticas);
-    } catch (error) {
-      console.error('Error al cargar estadísticas:', error);
-    }
-  };
-
   if (!estadisticas) {
-    return (
-      <View style={styles.contenedor}>
-        <Text>Cargando estadísticas...</Text>
-      </View>
-    );
+    return <View style={styles.container}><Text>Cargando estadísticas...</Text></View>;
   }
 
   return (
-    <ScrollView style={styles.contenedor}>
-      <View style={styles.seccion}>
-        <Text style={styles.tituloSeccion}>Goles</Text>
-        <Text style={styles.estadistica}>Total: {estadisticas.goles.total}</Text>
-        <Text style={styles.estadistica}>Promedio por partido: {estadisticas.goles.promedioPorPartido}</Text>
+    <ScrollView style={styles.container}>
+      <View style={styles.estadisticaItem}>
+        <Text  style={styles.estadisticaLabel}>Equipo Líder:</Text>
+        <Text style={styles.estadisticaValor}>{estadisticas.equipoLider}</Text>
       </View>
-
-      <View style={styles.seccion}>
-        <Text style={styles.tituloSeccion}>Tarjetas</Text>
-        <Text style={styles.estadistica}>Amarillas: {estadisticas.tarjetas.amarillas}</Text>
-        <Text style={styles.estadistica}>Rojas: {estadisticas.tarjetas.rojas}</Text>
+      <View style={styles.estadisticaItem}>
+        <Text style={styles.estadisticaLabel}>Goleador:</Text>
+        <Text style={styles.estadisticaValor}>{estadisticas.goleador}</Text>
       </View>
-
-      <View style={styles.seccion}>
-        <Text style={styles.tituloSeccion}>Partidos</Text>
-        <Text style={styles.estadistica}>Jugados: {estadisticas.partidos.jugados}</Text>
-        <Text style={styles.estadistica}>Por jugar: {estadisticas.partidos.porJugar}</Text>
+      <View style={styles.estadisticaItem}>
+        <Text style={styles.estadisticaLabel}>Máximo Asistidor:</Text>
+        <Text style={styles.estadisticaValor}>{estadisticas.asistidor}</Text>
       </View>
-
-      <View style={styles.seccion}>
-        <Text style={styles.tituloSeccion}>Equipos</Text>
-        <Text style={styles.estadistica}>Participantes: {estadisticas.equipos.total}</Text>
+      <View style={styles.estadisticaItem}>
+        <Text style={styles.estadisticaLabel}>Equipo con más goles:</Text>
+        <Text style={styles.estadisticaValor}>{estadisticas.equipoMasGoles}</Text>
       </View>
-
-      <View style={styles.seccion}>
-        <Text style={styles.tituloSeccion}>Jugadores</Text>
-        <Text style={styles.estadistica}>Total: {estadisticas.jugadores.total}</Text>
-        <Text style={styles.estadistica}>Goleador: {estadisticas.jugadores.goleador}</Text>
+      <View style={styles.estadisticaItem}>
+        <Text style={styles.estadisticaLabel}>Equipo con menos goles:</Text>
+        <Text style={styles.estadisticaValor}>{estadisticas.equipoMenosGoles}</Text>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  contenedor: {
+  container: {
     flex: 1,
-    backgroundColor: '#f5f6fa',
-    padding: 15,
+    padding: 10,
   },
-  seccion: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 15,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+  estadisticaItem: {
+    backgroundColor: '#f9f9f9',
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 5,
   },
-  tituloSeccion: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#2c3e50',
-    marginBottom: 10,
-  },
-  estadistica: {
+  estadisticaLabel: {
     fontSize: 16,
-    color: '#34495e',
+    fontWeight: 'bold',
     marginBottom: 5,
+  },
+  estadisticaValor: {
+    fontSize: 18,
+    color: '#007AFF',
   },
 });

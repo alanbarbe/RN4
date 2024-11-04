@@ -31,6 +31,7 @@
     "react-native": "0.74.5",
     "react-native-gesture-handler": "^2.20.2",
     "react-native-maps": "1.14.0",
+    "react-native-reanimated": "~3.10.1",
     "react-native-safe-area-context": "^4.14.0",
     "react-native-screens": "^3.31.1",
     "react-native-vector-icons": "^10.2.0",
@@ -38,9 +39,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@types/react": "~18.2.45",
-    "@types/react-native-vector-icons": "^6.4.18",
-    "typescript": "~5.3.3"
-  },
-  "private": true
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@types/react": "~18.2.14",
+    "typescript": "^5.1.3"
+  } 
+  
 }

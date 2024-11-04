@@ -1,143 +1,108 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, StyleSheet, Image } from 'react-native';
-import { Text } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-import { obtenerDetalleJugador } from '../services/api';
-import { Jugador } from '../types';
-
-type RootStackParamList = {
-  DetalleJugador: { id: string };
-};
+import { RootStackParamList } from '../types';
 
 type DetalleJugadorScreenRouteProp = RouteProp<RootStackParamList, 'DetalleJugador'>;
 
-type Props = {
+interface DetalleJugadorScreenProps {
   route: DetalleJugadorScreenRouteProp;
-};
+}
 
-export default function DetalleJugadorScreen({ route }: Props) {
-  const [jugador, setJugador] = useState<Jugador | null>(null);
+interface Jugador {
+  id: string;
+  nombre: string;
+  apellido: string;
+  edad: number;
+  posicion: string;
+  equipo: string;
+  foto: string;
+  estadisticas: {
+    goles: number;
+    asistencias: number;
+    tarjetasAmarillas: number;
+    tarjetasRojas: number;
+  };
+}
+
+export default function DetalleJugadorScreen({ route }: DetalleJugadorScreenProps) {
   const { id } = route.params;
+  const [jugador, setJugador] = useState<Jugador | null>(null);
 
   useEffect(() => {
-    cargarDetalleJugador();
-  }, []);
-
-  const cargarDetalleJugador = async () => {
-    try {
-      const datos = await obtenerDetalleJugador(id);
-      setJugador(datos);
-    } catch (error) {
-      console.error('Error al cargar detalle del jugador:', error);
-    }
-  };
+    // Aquí deberías cargar los detalles del jugador desde tu API o base de datos
+    // Por ahora, usaremos datos de ejemplo
+    setJugador({
+      id,
+      nombre: 'Juan',
+      apellido: 'Pérez',
+      edad: 25,
+      posicion: 'Delantero',
+      equipo: 'Equipo A',
+      foto: 'https://example.com/jugador.png',
+      estadisticas: {
+        goles: 10,
+        asistencias: 5,
+        tarjetasAmarillas: 2,
+        tarjetasRojas: 0,
+      },
+    });
+  }, [id]);
 
   if (!jugador) {
-    return (
-      <View style={styles.contenedor}>
-        <Text>Cargando...</Text>
-      </View>
-    );
+    return <View style={styles.container}><Text>Cargando detalles del jugador...</Text></View>;
   }
 
   return (
-    <ScrollView style={styles.contenedor}>
+    <View style={styles.container}>
       <Image source={{ uri: jugador.foto }} style={styles.foto} />
-      <Text style={styles.nombre}>{jugador.nombre}</Text>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoLabel}>Equipo:</Text>
-        <Text style={styles.infoValue}>{jugador.equipo}</Text>
+      <Text style={styles.nombre}>{`${jugador.nombre} ${jugador.apellido}`}</Text>
+      <Text style={styles.info}>{`Edad: ${jugador.edad}`}</Text>
+      <Text style={styles.info}>{`Posición: ${jugador.posicion}`}</Text>
+      <Text style={styles.info}>{`Equipo: ${jugador.equipo}`}</Text>
+      <View style={styles.estadisticas}>
+        <Text style={styles.subtitulo}>Estadísticas:</Text>
+        <Text style={styles.estadistica}>{`Goles: ${jugador.estadisticas.goles}`}</Text>
+        <Text style={styles.estadistica}>{`Asistencias: ${jugador.estadisticas.asistencias}`}</Text>
+        <Text style={styles.estadistica}>{`Tarjetas Amarillas: ${jugador.estadisticas.tarjetasAmarillas}`}</Text>
+        <Text style={styles.estadistica}>{`Tarjetas Rojas: ${jugador.estadisticas.tarjetasRojas}`}</Text>
       </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoLabel}>Posición:</Text>
-        <Text style={styles.infoValue}>{jugador.posicion}</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoLabel}>Edad:</Text>
-        <Text style={styles.infoValue}>{jugador.edad} años</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoLabel}>Nacionalidad:</Text>
-        <Text style={styles.infoValue}>{jugador.nacionalidad}</Text>
-      </View>
-      <Text style={styles.subtitulo}>Estadísticas</Text>
-      <View style={styles.estadisticasContainer}>
-        <View style={styles.estadistica}>
-          <Text style={styles.estadisticaValor}>{jugador.estadisticas.goles}</Text>
-          <Text style={styles.estadisticaLabel}>Goles</Text>
-        </View>
-        <View style={styles.estadistica}>
-          <Text style={styles.estadisticaValor}>{jugador.estadisticas.asistencias}</Text>
-          <Text style={styles.estadisticaLabel}>Asistencias</Text>
-        </View>
-        <View style={styles.estadistica}>
-          <Text style={styles.estadisticaValor}>{jugador.estadisticas.tarjetasAmarillas}</Text>
-          <Text style={styles.estadisticaLabel}>T. Amarillas</Text>
-        </View>
-        <View style={styles.estadistica}>
-          <Text style={styles.estadisticaValor}>{jugador.estadisticas.tarjetasRojas}</Text>
-          <Text style={styles.estadisticaLabel}>T. Rojas</Text>
-        </View>
-      </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  contenedor: {
+  container: {
     flex: 1,
-    backgroundColor: '#f5f6fa',
-    padding: 15,
+    padding: 10,
+    alignItems: 'center',
   },
   foto: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    alignSelf: 'center',
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     marginBottom: 20,
   },
   nombre: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#2c3e50',
-  },
-  infoContainer: {
-    flexDirection: 'row',
     marginBottom: 10,
   },
-  infoLabel: {
-    fontWeight: 'bold',
-    width: 100,
-    color: '#34495e',
+  info: {
+    fontSize: 16,
+    marginBottom: 5,
   },
-  infoValue: {
-    flex: 1,
-    color: '#7f8c8d',
-  },
-  subtitulo: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  estadisticas: {
     marginTop: 20,
-    marginBottom: 10,
-    color: '#2c3e50',
-  },
-  estadisticasContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  estadistica: {
     alignItems: 'center',
   },
-  estadisticaValor: {
-    fontSize: 24,
+  subtitulo: {
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#3498db',
+    marginBottom: 10,
   },
-  estadisticaLabel: {
-    fontSize: 14,
-    color: '#7f8c8d',
+  estadistica: {
+    fontSize: 16,
+    marginBottom: 5,
   },
 });

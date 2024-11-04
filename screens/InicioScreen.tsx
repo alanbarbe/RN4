@@ -1,8 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { NavigationScreenProps } from '../types';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
 
-export default function InicioScreen({ navigation }: NavigationScreenProps<'Inicio'>) {
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Inicio'>;
+
+export default function InicioScreen() {
+  const navigation = useNavigation<NavigationProp>();
+
   const menuItems = [
     { title: 'Equipos', route: 'Equipos' },
     { title: 'Jugadores', route: 'Jugadores' },
@@ -14,17 +20,15 @@ export default function InicioScreen({ navigation }: NavigationScreenProps<'Inic
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Torneo de Fútbol</Text>
-      <View style={styles.menuContainer}>
-        {menuItems.map((item) => (
-          <TouchableOpacity
-            key={item.route}
-            style={styles.menuItem}
-            onPress={() => navigation.navigate(item.route)}
-          >
-            <Text style={styles.menuText}>{item.title}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      {menuItems.map((item) => (
+        <TouchableOpacity
+          key={item.route}
+          style={styles.button}
+          onPress={() => navigation.navigate(item.route)}
+        >
+          <Text style={styles.buttonText}>{item.title}</Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 }
@@ -32,26 +36,25 @@ export default function InicioScreen({ navigation }: NavigationScreenProps<'Inic
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
   },
-  menuContainer: {
-    gap: 15,
-  },
-  menuItem: {
-    backgroundColor: '#f0f0f0',
-    padding: 15,
-    borderRadius: 10,
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+    width: '80%',
     alignItems: 'center',
   },
-  menuText: {
-    fontSize: 16,
-    fontWeight: '500',
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
   },
 });
