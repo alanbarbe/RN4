@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
   },
   estadisticaValor: {
     fontSize: 18,
-    color: '#007AFF',
+    color: '#0404e2',
   },
 });

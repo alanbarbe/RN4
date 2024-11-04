@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   resultadoTexto: {
     fontSize: 20,
     textAlign: 'center',
-    color: '#007AFF',
+    color: '#0404e2',
   },
   evento: {
     fontSize: 14,

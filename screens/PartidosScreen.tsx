@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   partidoResultado: {
     fontSize: 16,
-    color: '#007AFF',
+    color: '#0404e2',
     marginTop: 5,
   },
 });
