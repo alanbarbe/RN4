@@ -36,7 +36,7 @@ const ProfileScreen = () => {
       disabled={isLoading}
     >
       {isLoading ? (
-        <ActivityIndicator color="white" />
+        <ActivityIndicator color="#1f1e1e" />
       ) : (
         <Text style={styles.buttonText}>Cerrar Sesión</Text>
       )}
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   card: {
-    backgroundColor: 'white',
+    backgroundColor: '#1f1e1e',
     borderRadius: 5,
     padding: 15,
     marginBottom: 15,
@@ -76,18 +76,18 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
-    color: '#666',
+    color: '#fff',
     marginBottom: 5,
   },
   button: {
-    backgroundColor: '#ff4444',
+    backgroundColor: '#FE0000',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: '#1f1e1e',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
-    backgroundColor: 'white',
+    backgroundColor: '#1f1e1e',
   },
   buttonDisabled: {
     opacity: 0.7,

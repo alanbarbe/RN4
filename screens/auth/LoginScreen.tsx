@@ -35,7 +35,7 @@ const LoginScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Soccer Tournament</Text>
+            <Text style={styles.title}>Torneo de Futbol - RN4</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 40,
-        color: '#34D399',
+        color: '#0404e2',
     },
     input: {
         borderWidth: 1,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     button: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#0404e2',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     linkText: {
-        color: '#34D399',
+        color: '#0404e2',
         fontSize: 14,
     },
 });

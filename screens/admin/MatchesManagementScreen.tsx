@@ -265,11 +265,11 @@ const MatchesManagementScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
     },
     header: {
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
     },
@@ -287,14 +287,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     dateButton: {
-        backgroundColor: '#f1f1f1',
+        backgroundColor: '#0404e2',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
         marginBottom: 10,
     },
     addButton: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#FFDF00',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
         borderRadius: 8,
         padding: 15,
         marginBottom: 10,
@@ -328,11 +328,11 @@ const styles = StyleSheet.create({
     },
     dateText: {
         fontSize: 14,
-        color: '#666',
+        color: '#fff',
     },
     stadiumText: {
         fontSize: 14,
-        color: '#666',
+        color: '#fff',
     },
     teamText: {
         fontSize: 16,
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
     },
     vsText: {
         fontSize: 16,
-        color: '#666',
+        color: '#fff',
     },
     teamContainer: {
         flex: 1,
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     },
     emptyText: {
         fontSize: 16,
-        color: '#666',
+        color: '#fff',
         fontStyle: 'italic',
     },
     shield: {
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
         padding: 8,
     },
     deleteText: {
-        color: '#ff4444',
+        color: '#FE0000',
         fontWeight: 'bold',
     },
     goalsContainer: {

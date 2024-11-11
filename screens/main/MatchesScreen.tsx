@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
       },
       card: {
-        backgroundColor: 'white',
+        backgroundColor: '#1f1e1e',
         borderRadius: 8,
         padding: 16,
         marginBottom: 16,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
       },
       cardText: {
         fontSize: 16,
-        color: '#666',
+        color: '#fff',
         marginBottom: 4,
       },
 });

@@ -38,12 +38,12 @@ const CameraComponent = ({
     if (!permission?.granted) {
         return (
             <View style={styles.container}>
-                <Text style={styles.message}>We need your permission to show the camera</Text>
+                <Text style={styles.message}>Necesitamos tu permiso para acceder a la cámara</Text>
                 <TouchableOpacity 
                     style={styles.permissionButton} 
                     onPress={requestPermission}
                 >
-                    <Text style={styles.permissionButtonText}>Grant Permission</Text>
+                    <Text style={styles.permissionButtonText}>Permitir Cámara</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -326,7 +326,7 @@ const PlayersManagementScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
     },
     modalContainer: {
         flex: 1,
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
         borderRadius: 8,
         padding: 15,
         marginBottom: 10,
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     },
     uploadText: {
         fontSize: 24,
-        color: '#666',
+        color: '#fff',
     },
     playerName: {
         fontSize: 18,
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
         padding: 8,
     },
     deleteText: {
-        color: '#ff4444',
+        color: '#FE0000',
         fontWeight: 'bold',
     },
     camera: {
@@ -408,12 +408,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#34D399',
     },
     closeButton: {
-        backgroundColor: '#ff4444',
+        backgroundColor: '#FE0000',
     },
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: 'white',
+        color: '#fff',
     },
     message: {
         textAlign: 'center',
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     permissionButton: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#0404e2',
         padding: 15,
         borderRadius: 10,
         marginHorizontal: 20,
@@ -443,12 +443,12 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     statsButtonText: {
-        color: 'white',
+        color: '#fff',
         fontSize: 12,
         fontWeight: 'bold',
     },
     playerDetails: {
-        color: '#666',
+        color: '#fff',
         fontSize: 14,
     },
     buttonGroup: {
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     editButtonText: {
-        color: 'white',
+        color: '#fff',
         fontSize: 12,
         fontWeight: 'bold',
     },

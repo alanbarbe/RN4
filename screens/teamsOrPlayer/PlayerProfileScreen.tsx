@@ -28,12 +28,12 @@ const CameraComponent = ({
     if (!permission?.granted) {
         return (
             <View style={styles.container}>
-                <Text style={styles.message}>We need your permission to show the camera</Text>
+                <Text style={styles.message}>Necesitamos tu permiso para acceder a la cámara</Text>
                 <TouchableOpacity
                     style={styles.permissionButton}
                     onPress={requestPermission}
                 >
-                    <Text style={styles.permissionButtonText}>Grant Permission</Text>
+                    <Text style={styles.permissionButtonText}>Permitir Cámara</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -84,13 +84,13 @@ const CameraComponent = ({
                                 style={styles.cameraButton}
                                 onPress={() => setPhoto(null)}
                             >
-                                <Text style={styles.buttonText}>Retake</Text>
+                                <Text style={styles.buttonText}>Tomar de nuevo</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={[styles.cameraButton, styles.usePhotoButton]}
                                 onPress={handleUsePhoto}
                             >
-                                <Text style={styles.buttonText}>Use Photo</Text>
+                                <Text style={styles.buttonText}>Usar Foto</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -108,19 +108,19 @@ const CameraComponent = ({
                                         current === 'back' ? 'front' : 'back'
                                     )}
                                 >
-                                    <Text style={styles.buttonText}>Flip</Text>
+                                    <Text style={styles.buttonText}>Girar</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cameraButton}
                                     onPress={takePicture}
                                 >
-                                    <Text style={styles.buttonText}>Take Photo</Text>
+                                    <Text style={styles.buttonText}>Usar Foto</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={[styles.cameraButton, styles.closeButton]}
                                     onPress={onClose}
                                 >
-                                    <Text style={styles.buttonText}>Close</Text>
+                                    <Text style={styles.buttonText}>Cerrar</Text>
                                 </TouchableOpacity>
                             </View>
                         </CameraView>
@@ -425,7 +425,7 @@ const styles = StyleSheet.create({
     header: {
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
     },
     profileImage: {
         width: 150,
@@ -439,7 +439,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     imageButton: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#0404e2',
         padding: 10,
         borderRadius: 5,
         marginHorizontal: 5,
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     infoContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
         margin: 10,
         padding: 15,
         borderRadius: 10,
@@ -473,11 +473,11 @@ const styles = StyleSheet.create({
     },
     value: {
         fontSize: 16,
-        color: '#666',
+        color: '#fff',
     },
     input: {
         fontSize: 16,
-        color: '#666',
+        color: '#fff',
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 5,
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
         width: '60%',
     },
     button: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#0404e2',
         padding: 15,
         borderRadius: 10,
         margin: 20,
@@ -497,7 +497,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonCloseSession: {
-        backgroundColor: '#ff4444',
+        backgroundColor: '#FE0000',
         padding: 15,
         borderRadius: 10,
         margin: 20,
@@ -528,10 +528,10 @@ const styles = StyleSheet.create({
         minWidth: 100,
     },
     usePhotoButton: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#0404e2',
     },
     closeButton: {
-        backgroundColor: '#ff4444',
+        backgroundColor: '#FE0000',
     },
     message: {
         textAlign: 'center',
@@ -539,7 +539,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     permissionButton: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#0404e2',
         padding: 15,
         borderRadius: 10,
         marginHorizontal: 20,

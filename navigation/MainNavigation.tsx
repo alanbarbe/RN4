@@ -21,19 +21,19 @@ export const MainNavigator = () => {
                     let iconName;
 
                     switch (route.name) {
-                        case 'Home':
+                        case 'Inicio':
                             iconName = focused ? 'home' : 'home-outline';
                             break;
-                        case 'Teams':
+                        case 'Equipos':
                             iconName = focused ? 'shield' : 'shield-outline';
                             break;
-                        case 'Matches':
+                        case 'Partidos':
                             iconName = focused ? 'soccer' : 'soccer-field';
                             break;
-                        case 'Statistics':
+                        case 'Estadísticas':
                             iconName = focused ? 'chart-bar' : 'chart-bar-stacked';
                             break;
-                        case 'Profile':
+                        case 'Perfil':
                             iconName = focused ? 'account' : 'account-outline';
                             break;
                         default:
@@ -43,7 +43,9 @@ export const MainNavigator = () => {
                     return <Icon name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: '#0404e2',
-                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveTintColor: 'White',
+                tabBarActiveBackgroundColor: '#1f1e1e',
+                tabBarInactiveBackgroundColor:'#1f1e1e',
             })}
         >
             <Tab.Screen

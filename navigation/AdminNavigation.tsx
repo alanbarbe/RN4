@@ -44,28 +44,30 @@ export const AdminNavigator = () => {
                     return <Icon name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: '#0404e2',
-                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveTintColor: 'white',
+                tabBarActiveBackgroundColor: '#1f1e1e',
+                tabBarInactiveBackgroundColor:'#1f1e1e',
             })}
         >
             <Tab.Screen
                 name="Home"
                 component={PlayersManagementScreen}
-                options={{ title: 'Players' }}
+                options={{ title: 'Inicio' }}
             />
             <Tab.Screen
                 name="Teams"
                 component={TeamsManagementScreen}
-                options={{ title: 'Teams' }}
+                options={{ title: 'Equipos' }}
             />
             <Tab.Screen
                 name="Matches"
                 component={MatchesManagementScreen}
-                options={{ title: 'Matches' }}
+                options={{ title: 'Partidos' }}
             />
             <Tab.Screen
                 name="Profile"
                 component={UsersManagementScreen}
-                options={{ title: 'Users' }}
+                options={{ title: 'Usuarios' }}
             />
         </Tab.Navigator>
     );

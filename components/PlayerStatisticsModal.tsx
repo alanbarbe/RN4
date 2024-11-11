@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalContent: {
-        backgroundColor: 'white',
+        backgroundColor: '#1f1e1e',
         borderRadius: 20,
         padding: 20,
         width: '90%',
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 16,
         marginBottom: 5,
-        color: '#666',
+        color: '#fff',
     },
     input: {
         borderWidth: 1,
@@ -191,13 +191,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
     cancelButton: {
-        backgroundColor: '#ff4444',
+        backgroundColor: '#FE0000',
     },
     saveButton: {
         backgroundColor: '#34D399',
     },
     buttonText: {
-        color: 'white',
+        color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
     },

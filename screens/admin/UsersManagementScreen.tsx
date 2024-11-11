@@ -324,18 +324,18 @@ const UsersManagementScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
     },
     addButton: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#0404e2',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     logoutButton: {
-        backgroundColor: '#ff4444',
+        backgroundColor: '#FE0000',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
         borderRadius: 8,
         padding: 15,
         marginBottom: 10,
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     },
     roleText: {
         fontSize: 14,
-        color: '#666',
+        color: '#fff',
     },
     actionButtons: {
         flexDirection: 'row',
@@ -426,13 +426,13 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     roleButtonText: {
-        color: '#666',
+        color: '#fff',
     },
     deleteButton: {
         padding: 8,
     },
     deleteText: {
-        color: '#ff4444',
+        color: '#FE0000',
         fontWeight: 'bold',
     },
     imageUploadContainer: {
@@ -450,7 +450,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     uploadButtonText: {
-        color: '#666',
+        color: '#fff',
         fontSize: 16,
     },
     selectedImageContainer: {
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
     changeImageText: {
-        color: '#666',
+        color: '#fff',
     },
     submitButtonDisabled: {
         backgroundColor: '#a8a8a8',

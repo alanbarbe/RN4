@@ -77,7 +77,7 @@ const TeamsManagementScreen = () => {
         if (uploadingImage == team.id.toString()) {
             return (
                 <View style={styles.teamIcon}>
-                    <ActivityIndicator color="#34D399" />
+                    <ActivityIndicator color="#0404e2" />
                 </View>
             );
         }
@@ -157,16 +157,16 @@ const TeamsManagementScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
     },
     header: {
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
     },
     addButton: {
-        backgroundColor: '#34D399',
+        backgroundColor: '#0404e2',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#1f1e1e',
         borderRadius: 8,
         padding: 15,
         marginBottom: 10,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     },
     uploadText: {
         fontSize: 24,
-        color: '#666',
+        color: '#fff',
     },
     teamName: {
         fontSize: 18,
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
         padding: 8,
     },
     deleteText: {
-        color: '#ff4444',
+        color: '#FE0000',
         fontWeight: 'bold',
     },
     editInput: {
